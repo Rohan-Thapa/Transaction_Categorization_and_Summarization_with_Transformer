@@ -6,12 +6,19 @@ import os
 import sys
 from inference import TransactionClassifier
 from config import config
+import torch
 
 # Adding the parent directory to the path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # Initializing the classifier
 classifier = TransactionClassifier()
+
+# ADD: Device warning if using CPU
+if torch.cuda.is_available():
+    st.sidebar.success("✅ Using GPU acceleration")
+else:
+    st.sidebar.warning("⚠️ Using CPU - performance may be slower")
 
 
 def main():

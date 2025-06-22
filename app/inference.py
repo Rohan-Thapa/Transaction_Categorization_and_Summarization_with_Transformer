@@ -6,9 +6,11 @@ import torch
 class TransactionClassifier:
     def __init__(self, model_path="../trained_models/finetuned_model"):
         self.model, self.tokenizer = load_model(model_path)
+        self.model.eval()  # Setting the model to evaluation mode
 
     def categorize(self, transactions):
         """Categorizing one or more transactions"""
+        device = self.model.device  # Getting the MODEL'S device as CPU or GPU
         if isinstance(transactions, str):
             transactions = [transactions]
 
@@ -25,6 +27,7 @@ class TransactionClassifier:
                 padding=True,
                 truncation=True
             )
+            inputs = {k: v.to(device) for k, v in inputs.items()} # this also regarding the device
 
             # Predicting through the model
             with torch.no_grad():

@@ -28,6 +28,7 @@ def extract_amount(text):
 
 def load_model(model_path="../trained_models/finetuned_model"):
     """Loading the trained model for inference"""
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     try:
         peft_config = PeftConfig.from_pretrained(model_path)
         base_model = AutoModelForSequenceClassification.from_pretrained(
@@ -38,6 +39,7 @@ def load_model(model_path="../trained_models/finetuned_model"):
         )
         model = PeftModel.from_pretrained(base_model, model_path)
         tokenizer = AutoTokenizer.from_pretrained(model_path)
+        model = model.to(device)  # this is for the model as CPU or GPU
         return model, tokenizer
     except Exception as e:
         print(f"⚠️ Error loading fine-tuned model: {str(e)}")
@@ -50,5 +52,6 @@ def load_model(model_path="../trained_models/finetuned_model"):
             label2id=config.label2id
         )
         tokenizer = AutoTokenizer.from_pretrained(config.MODEL_NAME)
+        model = model.to(device)  # added the device here too.
         return model, tokenizer
 # The utilites for the dashboard visualization here with proper insights of the information
