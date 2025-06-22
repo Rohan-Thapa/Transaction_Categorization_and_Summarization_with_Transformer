@@ -25,7 +25,7 @@ os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 
 def main():
     # Loading the dataset
-    df = pd.read_csv("financial_transactions.csv")
+    df = pd.read_csv("../data-generation/financial_transactions.csv")
 
     # Adding the label IDs
     df['label'] = df['category'].map(config.label2id)
