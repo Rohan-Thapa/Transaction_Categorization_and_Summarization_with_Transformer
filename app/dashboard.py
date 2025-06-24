@@ -126,6 +126,9 @@ def main():
             )
             st.plotly_chart(fig2, use_container_width=True)
 
+        st.subheader("Summarization of the transactions")
+'''
+        # Currently remvoing the budgeting as here the summarization of the transactions is required.
         # Budget Monitoring as for the test, budgeting was also added later it will be removed during the push of the code
         st.subheader("💰 Budget Monitoring")
         budgets = {
@@ -153,7 +156,7 @@ def main():
                 st.warning(f"⚠️ Approaching budget limit for {category}")
             elif spent > budget:
                 st.error(f"🚨 Budget exceeded for {category} by ₹{spent - budget:.2f}")
-
+'''
 
 if __name__ == "__main__":
     main()
