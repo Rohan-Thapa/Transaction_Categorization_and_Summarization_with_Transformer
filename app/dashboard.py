@@ -7,6 +7,7 @@ import sys
 from inference import TransactionClassifier
 from config import config
 import torch
+from summarizer import simple_summarizer
 
 # Adding the parent directory to the path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -132,9 +133,10 @@ def main():
             st.plotly_chart(fig2, use_container_width=True)
 
         st.subheader("Summarization of the transactions")
-        if st.button("Summarize the transactions", type="primary"):
+        if st.button("Summarize the Transactions", type="primary"):
             with st.expander("This is the summarization text of the transactions.", expanded=True):
-                st.write("The summarization of user transactions.") # Here the summarized text should be
+                st.write(simple_summarizer(st.session_state.results)) # Here the summarized text should be
+                # print(st.session_state.results['Category'].value_counts())
 
 
 if __name__ == "__main__":
