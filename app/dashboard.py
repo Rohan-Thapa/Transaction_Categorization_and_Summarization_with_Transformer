@@ -17,13 +17,18 @@ classifier = TransactionClassifier()
 # ADD: Device warning if using CPU
 if torch.cuda.is_available():
     st.sidebar.success("✅ Using GPU acceleration")
+    st.sidebar.text("The AI is using GPU and is fast.")
 else:
     st.sidebar.warning("⚠️ Using CPU - performance may be slower")
+    st.sidebar.text("The AI is using CPU due to CUDA unavailable and is 3-5x slower.")
+
+st.sidebar.divider()
+st.sidebar.text("Created by Summarizers Group")
 
 
 def main():
     st.set_page_config(
-        page_title="Financial Intelligence Dashboard",
+        page_title="Classify'n'Summarize | Financial Intelligence",
         page_icon="💰",
         layout="wide"
     )
@@ -54,7 +59,7 @@ def main():
     # Header content for the dashboard
     st.markdown("""
     <div class="header">
-        <h1>💰 Financial Intelligence Dashboard</h1>
+        <h1>💰 Classify’n’Summarize</h1>
         <p>AI-powered Transaction Analysis</p>
     </div>
     """, unsafe_allow_html=True)
@@ -127,36 +132,10 @@ def main():
             st.plotly_chart(fig2, use_container_width=True)
 
         st.subheader("Summarization of the transactions")
-'''
-        # Currently remvoing the budgeting as here the summarization of the transactions is required.
-        # Budget Monitoring as for the test, budgeting was also added later it will be removed during the push of the code
-        st.subheader("💰 Budget Monitoring")
-        budgets = {
-            "Food": st.number_input("Food Budget", value=10000, step=500),
-            "Shopping": st.number_input("Shopping Budget", value=8000, step=500),
-            "Entertainment": st.number_input("Entertainment Budget", value=5000, step=500),
-            "Transportation": st.number_input("Transportation Budget", value=7000, step=500)
-        }
+        if st.button("Summarize the transactions", type="primary"):
+            with st.expander("This is the summarization text of the transactions.", expanded=True):
+                st.write("The summarization of user transactions.") # Here the summarized text should be
 
-        spending = st.session_state.results.groupby("Category")["Amount"].sum()
-
-        for category, budget in budgets.items():
-            spent = spending.get(category, 0)
-            if budget > 0:
-                progress = min(100, (spent / budget) * 100)
-            else:
-                progress = 0
-
-            st.markdown(f"**{category}**")
-            col1, col2 = st.columns([3, 1])
-            col1.progress(progress / 100)
-            col2.metric("", f"₹{spent} / ₹{budget}")
-
-            if spent > budget * 0.9 and spent <= budget:
-                st.warning(f"⚠️ Approaching budget limit for {category}")
-            elif spent > budget:
-                st.error(f"🚨 Budget exceeded for {category} by ₹{spent - budget:.2f}")
-'''
 
 if __name__ == "__main__":
     main()
