@@ -24,7 +24,8 @@ def generate_dataset(num_samples=300):
         "Education": [
             "Paid Rs {amount} to {institution} for tuition",
             "Sent {amount} to {institution} for course fees",
-            "Education payment to {institution} Rs {amount}"
+            "Education payment to {institution} Rs {amount}",
+            "Paid Rs {amount} for online course fees"
         ],
         "Utilities": [
             "Paid Rs {amount} for {utility} bill",
